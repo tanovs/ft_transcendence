@@ -2,6 +2,13 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/commo
 import { User } from "./user.entity";
 import { UsersService } from "./users.service";
 
+class Person {
+  id: number;
+  login: string;
+  password: string;
+  guild: string;
+}
+
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UsersService) {
