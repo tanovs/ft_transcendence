@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import io from 'socket.io-client';
+import {BACKEND_ADDRESS} from "../../environments/environment";
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -16,7 +17,7 @@ export class ChatComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.socket = io('http://localhost:3000')
+    this.socket = io(BACKEND_ADDRESS)
     this.socket.on('msgToClient', (msg: MyMessage) => {
       this.receivedMessage(msg)
     })

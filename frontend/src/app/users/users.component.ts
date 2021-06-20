@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {share} from "rxjs/operators";
+import {BACKEND_ADDRESS} from "../../environments/environment";
 
 @Component({
   selector: 'app-users',
@@ -15,7 +16,7 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(): Observable<Person[]> {
-    return this.http.get<Person[]>('http://localhost:3000/users').pipe(share());
+    return this.http.get<Person[]>(BACKEND_ADDRESS + '/users').pipe(share());
   }
 
   ngOnInit(): void {
