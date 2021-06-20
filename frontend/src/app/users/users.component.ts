@@ -9,6 +9,7 @@ import {share} from "rxjs/operators";
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+  title = 'Тут работаем с базой данных'
   users$: Observable<Person[]> = this.getUsers();
   constructor(private http: HttpClient) {
   }
@@ -18,6 +19,7 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 }
 

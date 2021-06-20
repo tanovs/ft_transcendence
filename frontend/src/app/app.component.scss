@@ -147,4 +147,13 @@ a {
   padding: 0.45rem;
   margin: 0 0.25rem;
 }
+
+  #messages{
+    height:300px;
+    overflow-y: scroll;
+  }
+
+  #app {
+    margin-top: 2rem;
+  }
 }
