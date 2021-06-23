@@ -6,12 +6,9 @@ import { AppComponent } from './app.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { UsersComponent } from './users/users.component';
-import { FirstComponent } from './first/first.component';
-import { SecondComponent } from './second/second.component';
-import { RegisterComponent } from './register/register.component';
 
 @NgModule({
-  declarations: [AppComponent, UsersComponent, FirstComponent, SecondComponent, RegisterComponent],
+  declarations: [AppComponent, UsersComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent]
