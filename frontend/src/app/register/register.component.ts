@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {share} from "rxjs/operators";
+
 
 @Component({
   selector: 'app-register',
@@ -9,21 +8,25 @@ import {share} from "rxjs/operators";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  user: User = new User(0,'newUser', '', '')
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
 
+  register() {
+    let user: User = { login: 'Qsymond', password: 'newPassword'}
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    this.http.post('http://localhost:3000/users', JSON.stringify(user), httpOptions).subscribe()
+    console.log(JSON.stringify(user))
+  }
 
 }
-
-class User {
-  constructor(
-    public id: number,
-    public login: string,
-  public password: string,
-  public guild: string) {}
+interface User {
+  login: string,
+  password: string
 }
