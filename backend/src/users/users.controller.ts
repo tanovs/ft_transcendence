@@ -17,9 +17,14 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.usersService.findOne(id);
+  // @Get(':id')
+  // findOne(@Param('id') id: number) {
+  //   return this.usersService.findOne(id);
+  // }
+
+  @Get(':login')
+  async findByName(@Param('login') login: string) {
+    return await this.usersService.findByName(login);
   }
 
   @Patch(':id')
