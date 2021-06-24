@@ -32,11 +32,6 @@ export class UsersController {
     }
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.usersService.findAll();
-  // }
-
   @Get()
   findAll(@Query('login') login: string) {
     if (login)
