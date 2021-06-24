@@ -1,1 +1,11 @@
-<button type="submit" (click)="register()">Зарегистироваться</button>
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+  <div>
+    <label for="login">Логин</label>
+    <input id="login" type="text" formControlName="login">
+  </div>
+  <div>
+    <label for="password">Пароль</label>
+    <input id="password" type="password" formControlName="password">
+  </div>
+  <button class="button" type="submit">Зарегистрироваться</button>
+</form>
