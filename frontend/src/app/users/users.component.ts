@@ -28,5 +28,4 @@ interface Person {
   id: number;
   login: number;
   password: string;
-  guild: string;
 }
