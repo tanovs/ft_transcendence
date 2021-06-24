@@ -44,12 +44,6 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  @Get()
-  findByName(@Param() params): Promise<User> {
-    console.log(params.id);
-    return this.usersService.findOne(7);
-  }
-
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
