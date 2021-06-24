@@ -13,7 +13,6 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
 
 @Controller('users')
 export class UsersController {
@@ -38,11 +37,6 @@ export class UsersController {
       return this.usersService.findByLogin(login);
     return this.usersService.findAll();
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: number) {
-  //   return this.usersService.findOne(id);
-  // }
 
   @Get(':login')
   async findByName(@Param('login') login: string) {
