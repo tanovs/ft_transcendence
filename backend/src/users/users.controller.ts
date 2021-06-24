@@ -18,6 +18,18 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get()
+  findAll(@Query('login') login: string) {
+    if (login)
+      return this.usersService.findByLogin(login);
+    return this.usersService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: number) {
+    return this.usersService.findOne(id);
+  }
+
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
@@ -29,18 +41,6 @@ export class UsersController {
     } catch (error) {
       return 'Пользователь с таким логином уже существует'
     }
-  }
-
-  @Get()
-  findAll(@Query('login') login: string) {
-    if (login)
-      return this.usersService.findByLogin(login);
-    return this.usersService.findAll();
-  }
-
-  @Get(':login')
-  async findByName(@Param('login') login: string) {
-    return await this.usersService.findByName(login);
   }
 
   @Patch(':id')
