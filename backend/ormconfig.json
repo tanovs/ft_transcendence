@@ -2,7 +2,7 @@
 "type": "postgres",
 "host": "localhost",
 "port": 5432,
-"username": "qsymond",
+"username": "victorinavica",
 "password": "postgres",
 "database": "ft_transcendence",
 "entities": ["dist/**/*.entity{.ts,.js}"],
