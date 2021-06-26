@@ -19,7 +19,7 @@ export class UsersService {
     const hash = await bcrypt.hash(createUserDto.password, saltOrRounds);
     result.login = createUserDto.login;
     result.password = hash;
-    return this.userRepository.save(result);
+    return this.userRepository.save(createUserDto);
   }
 
   findAll(): Promise<User[]> {
@@ -43,4 +43,5 @@ export class UsersService {
   remove(id: number) {
     return this.userRepository.delete(id);
   }
+
 }
