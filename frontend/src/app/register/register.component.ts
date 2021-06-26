@@ -11,7 +11,7 @@ import {FormBuilder} from "@angular/forms";
 export class RegisterComponent implements OnInit {
   title = 'Форма регистрации'
   registerForm = this.formBuilder.group({
-    login: '',
+    username: '',
     password: ''
   });
 
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
 
   register() {
     const user = {
-      login: this.registerForm.value.login,
+      username: this.registerForm.value.username,
       password: this.registerForm.value.password
     }
     const httpOptions = {
@@ -34,8 +34,4 @@ export class RegisterComponent implements OnInit {
     this.http.post(BACKEND_ADDRESS + '/users', JSON.stringify(user), httpOptions).subscribe()
   }
 
-}
-interface User {
-  login: string,
-  password: string
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {share} from "rxjs/operators";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BACKEND_ADDRESS} from "../../environments/environment";
+import {catchError} from "rxjs/operators";
+
 
 @Component({
   selector: 'app-users',
@@ -11,12 +12,19 @@ import {BACKEND_ADDRESS} from "../../environments/environment";
 })
 export class UsersComponent implements OnInit {
   title = 'Тут работаем с базой данных'
-  users$: Observable<Person[]> = this.getUsers();
+
   constructor(private http: HttpClient) {
   }
 
+  users$: Observable<Person[]> = this.getUsers();
+
   getUsers(): Observable<Person[]> {
-    return this.http.get<Person[]>(BACKEND_ADDRESS + '/users').pipe(share());
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization':  'Bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    return this.http.get<Person[]>(BACKEND_ADDRESS + '/users', httpOptions).pipe();
   }
 
   ngOnInit(): void {
@@ -26,6 +34,6 @@ export class UsersComponent implements OnInit {
 
 interface Person {
   id: number;
-  login: number;
+  username: number;
   password: string;
 }
