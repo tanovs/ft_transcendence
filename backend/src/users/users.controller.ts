@@ -19,9 +19,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  findAll(@Query('login') login: string) {
-    if (login)
-      return this.usersService.findByLogin(login);
+  findAll(@Query('username') username: string) {
+    if (username)
+      return this.usersService.findByUserName(username);
     return this.usersService.findAll();
   }
 
@@ -37,7 +37,7 @@ export class UsersController {
         throw new HttpException({
           message: err.message
         }, HttpStatus.BAD_REQUEST);
-        })
+      })
     } catch (error) {
       return 'Пользователь с таким логином уже существует'
     }

@@ -4,7 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsNotEmpty()
-  login: string;
+  username: string;
 
   @IsNotEmpty()
   password: string;
