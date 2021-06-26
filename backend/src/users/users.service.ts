@@ -32,7 +32,7 @@ export class UsersService {
 
   async findByUserName(username: string): Promise<User> {
     const qb = this.userRepository.createQueryBuilder('user');
-    return qb.where('lower(user.username) = :username', { username: username }).getOne();
+    return qb.where('user.username = :username', { username: username }).getOne();
   }
 
 
