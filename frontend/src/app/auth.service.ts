@@ -5,19 +5,20 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient) { }
   uri = 'http://localhost:3000/auth'
-
   login(username: string, password: string) {
+    const user = {
+      username: username,
+      password: password
+    }
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     };
-    const user = {
-      username: username,
-      password: password
-    }
+
     this.http.post(this.uri, JSON.stringify(user), httpOptions)
       .subscribe((resp: any) => {
         console.log(resp.access_token)

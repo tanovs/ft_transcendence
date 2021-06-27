@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable, throwError} from "rxjs";
+import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpRequest} from "@angular/common/http";
 import {BACKEND_ADDRESS} from "../../environments/environment";
-import {catchError} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -13,7 +14,8 @@ import {catchError} from "rxjs/operators";
 export class UsersComponent implements OnInit {
   title = 'Тут работаем с базой данных'
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private router: Router) {
   }
 
   users$: Observable<Person[]> = this.getUsers();
@@ -24,11 +26,15 @@ export class UsersComponent implements OnInit {
         'Authorization':  'Bearer ' + localStorage.getItem('access_token')
       })
     };
+    this.http.get('')
     return this.http.get<Person[]>(BACKEND_ADDRESS + '/users', httpOptions).pipe();
   }
 
   ngOnInit(): void {
-
+    if (!localStorage.getItem('access_token'))
+    {
+      this.router.navigate(['/login'])
+    }
   }
 }
 

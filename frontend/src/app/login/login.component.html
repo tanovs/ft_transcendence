@@ -1,0 +1,18 @@
+<nav>
+  <div class="container">
+    <div class="card">
+      <form [formGroup]="registerForm" (ngSubmit)="login()">
+        <div>
+          <label for="username">Логин</label>
+          <input id="username" type="text" formControlName="username">
+        </div>
+        <div>
+          <label for="password">Пароль</label>
+          <input id="password" type="password" formControlName="password">
+        </div>
+        <button class="button" type="submit">Войти</button>
+        <button class="button" (click)="logout()">Выйти</button>
+      </form>
+    </div>
+  </div>
+</nav>

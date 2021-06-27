@@ -8,9 +8,11 @@ import { UsersComponent } from './users/users.component';
 import { ChatComponent } from './chat/chat.component';
 import { RegisterComponent } from './register/register.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginComponent } from './login/login.component';
+
 
 @NgModule({
-  declarations: [AppComponent, UsersComponent, ChatComponent, RegisterComponent],
+  declarations: [AppComponent, UsersComponent, ChatComponent, RegisterComponent, LoginComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgbModule],
   providers: [],
   bootstrap: [AppComponent]
