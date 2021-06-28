@@ -20,9 +20,9 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  // findOne(id: number) {
-  //   return this.userRepository.findOne(id);
-  // }
+  findOne(id: number) {
+    return this.userRepository.findOne(id);
+  }
 
   async findByName(login: string): Promise<User> {
     const qb = this.userRepository.createQueryBuilder('p');
