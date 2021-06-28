@@ -6,7 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  Res,
   UseGuards,
+  HttpStatus,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,10 +19,10 @@ import { LocalAuthGuard } from '../auth/guards/local-auth.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(LocalAuthGuard)
+  //@UseGuards(LocalAuthGuard)
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
+    console.log('User created: ' + createUserDto.login);
     return this.usersService.create(createUserDto);
   }
 
@@ -40,7 +42,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.usersService.remove(id);
+  remove(@Param('id') id: number, @Res() res) {
+    const data = this.usersService.remove(id);
+    return res.status(HttpStatus.OK).json(data);
   }
 }
