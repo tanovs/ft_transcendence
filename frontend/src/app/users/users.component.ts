@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, throwError} from "rxjs";
-import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpRequest} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BACKEND_ADDRESS} from "../../environments/environment";
-import {catchError, tap} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {AuthInterceptor} from "../auth.interceptor";
+
 
 
 @Component({
@@ -26,7 +27,6 @@ export class UsersComponent implements OnInit {
         'Authorization':  'Bearer ' + localStorage.getItem('access_token')
       })
     };
-    this.http.get('')
     return this.http.get<Person[]>(BACKEND_ADDRESS + '/users', httpOptions).pipe();
   }
 
