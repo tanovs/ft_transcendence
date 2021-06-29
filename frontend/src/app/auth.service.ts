@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {waitForAsync} from "@angular/core/testing";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   constructor(
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private router: Router) { }
   uri = 'http://localhost:3000/auth'
   login(username: string, password: string) {
     const user = {
@@ -23,11 +26,16 @@ export class AuthService {
       .subscribe((resp: any) => {
         console.log(resp.access_token)
         localStorage.setItem('access_token', resp.access_token)
+        if (localStorage.getItem('access_token'))
+          this.router.navigate(['/users'])
       });
+
+
   }
 
   logout() {
     localStorage.removeItem('access_token');
+    this.router.navigate(['/login'])
   }
 
 }

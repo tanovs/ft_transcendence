@@ -10,7 +10,6 @@ import {AuthService} from "./auth.service";
 
 export class AppComponent implements OnInit{
 
-
   constructor(private authService: AuthService) {
   }
 
@@ -21,6 +20,11 @@ export class AppComponent implements OnInit{
     this.authService.logout();
   }
 
+  isAuthorised() : boolean {
+    if (localStorage.getItem('access_token'))
+      return true;
+    return false;
+  }
 }
 
 
