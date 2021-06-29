@@ -14,6 +14,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LocalAuthGuard } from '../auth/guards/local-auth.guard';
+import { User } from './entities/user.entity';
 
 @Controller('users')
 export class UsersController {
@@ -21,9 +22,9 @@ export class UsersController {
 
   //@UseGuards(LocalAuthGuard)
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
     console.log('User created: ' + createUserDto.login);
-    return this.usersService.create(createUserDto);
+    return new User(await this.usersService.create(createUserDto));
   }
 
   @Get()
