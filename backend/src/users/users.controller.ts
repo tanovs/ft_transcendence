@@ -9,6 +9,7 @@ import {
   Res,
   UseGuards,
   HttpStatus,
+  HttpException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -43,8 +44,17 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number, @Res() res) {
-    const data = this.usersService.remove(id);
-    return res.status(HttpStatus.OK).json(data);
+  async remove(@Param('id') id: number, @Res() res) {
+    const user = await this.usersService.findOne(id);
+    if (!user)
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'User not found',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    await this.usersService.remove(id);
+    return res.status(HttpStatus.OK).json('deleted: ' + user.login);
   }
 }
