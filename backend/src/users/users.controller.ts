@@ -45,16 +45,13 @@ export class UsersController {
 
   @Delete(':id')
   async remove(@Param('id') id: number, @Res() res) {
-    const user = await this.usersService.findOne(id);
-    if (!user)
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'User not found',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    await this.usersService.remove(id);
-    return res.status(HttpStatus.OK).json('deleted: ' + user.login);
+    this.usersService.findOne(id).then(function (user) {
+      if (!user) {
+        return res.status(HttpStatus.BAD_REQUEST).json('User not found');
+      } else {
+        return res.status(HttpStatus.OK).json('deleted: ' + user.login);
+      }
+    });
+    this.usersService.remove(id);
   }
 }
