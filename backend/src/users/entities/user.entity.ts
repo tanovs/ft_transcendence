@@ -17,8 +17,12 @@ export class User {
   email: string;
 
   @Exclude()
-  @Column()
+  @Column({ nullable: true })
   token: string;
+
+  @Exclude()
+  @Column({ nullable: true })
+  public twoFactorAuthenticationSecret?: string;
 
   constructor(partial: Partial<User>) {
     Object.assign(this, partial);

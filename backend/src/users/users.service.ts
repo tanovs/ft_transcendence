@@ -17,7 +17,6 @@ export class UsersService {
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     createUserDto.password = bcrypt.hashSync(createUserDto.password, salt);
-    createUserDto.token = '1';
     return this.userRepository.save(createUserDto);
   }
 
@@ -41,5 +40,12 @@ export class UsersService {
 
   remove(id: number) {
     return this.userRepository.delete(id);
+  }
+
+  async setTwoFactorAuthenticationSecret(secret: string, userId: number) {
+    console.log('ID: ' + userId + '\nsecret: ' + secret);
+    return this.userRepository.update(userId, {
+      twoFactorAuthenticationSecret: secret,
+    });
   }
 }

@@ -3,7 +3,8 @@ import { UsersService } from './users/users.service';
 import { LocalAuthGuard } from './auth/guards/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
-import { Response } from 'express';
+import { UsersDecorator } from "./users/users.decorator";
+import { User } from "./users/entities/user.entity";
 
 @Controller()
 export class AppController {
@@ -20,8 +21,7 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@Req() req, @Res() res: Response) {
-    const user = await this.usersService.findOne(req.user.sub);
-    return res.status(200).json(user);
+  async getProfile(@Req() req) {
+    return this.usersService.findOne(req.user.sub);
   }
 }
