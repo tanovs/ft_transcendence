@@ -17,6 +17,7 @@ export class UsersService {
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     createUserDto.password = bcrypt.hashSync(createUserDto.password, salt);
+    createUserDto.token = '1';
     return this.userRepository.save(createUserDto);
   }
 
@@ -28,17 +29,9 @@ export class UsersService {
     return this.userRepository.findOne(id);
   }
 
-  async findByName(login: string): Promise<User> {
+  async findByName(login: string): Promise<User | null> {
     const qb = this.userRepository.createQueryBuilder('p');
     const user = qb.where('p.login = :login', { login: login }).getOne();
-    if (!user)
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'User not found',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
     return user;
   }
 

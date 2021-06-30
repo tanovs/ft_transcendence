@@ -13,6 +13,13 @@ export class User {
   @Column()
   password: string;
 
+  @Column()
+  email: string;
+
+  @Exclude()
+  @Column()
+  token: string;
+
   constructor(partial: Partial<User>) {
     Object.assign(this, partial);
   }

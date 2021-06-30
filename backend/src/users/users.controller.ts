@@ -35,7 +35,17 @@ export class UsersController {
 
   @Get(':login')
   async findByName(@Param('login') login: string) {
-    return await this.usersService.findByName(login);
+    const user = new User(await this.usersService.findByName(login));
+    if (!user.login) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'User is not found',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return user;
   }
 
   @Patch(':id')
