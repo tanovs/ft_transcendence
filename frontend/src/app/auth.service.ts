@@ -7,10 +7,13 @@ import {waitForAsync} from "@angular/core/testing";
   providedIn: 'root'
 })
 export class AuthService {
+
+
   constructor(
     private http: HttpClient,
     private router: Router) { }
   uri = 'http://localhost:3000/auth'
+
   login(username: string, password: string) {
     const user = {
       username: username,
@@ -37,5 +40,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     this.router.navigate(['/login'])
   }
+
+
 
 }
