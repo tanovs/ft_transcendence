@@ -8,10 +8,9 @@ import { ChatGateway } from './chat.gateway';
 import { AuthService } from './auth/auth.service';
 import { TwoFactorAuthenticationService } from './2fa/twoFactorAuthentication.service';
 import { TwoFactorAuthenticationModule } from './2fa/twoFactorAuthentication.module';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './auth/constants';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
@@ -19,11 +18,13 @@ import { jwtConstants } from './auth/constants';
     UsersModule,
     AuthModule,
     TwoFactorAuthenticationModule,
-    JwtModule.register({
-      signOptions: {
-        expiresIn: '60s',
-      },
-      secret: jwtConstants.secret,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: './.env',
+      validationSchema: Joi.object({
+        JWT_SECRET: Joi.string().required(),
+        JWT_EXPIRATION_TIME: Joi.string().required(),
+      }),
     }),
   ],
   controllers: [AppController],
