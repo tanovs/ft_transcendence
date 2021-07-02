@@ -3,6 +3,8 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
+import { jwtConstants } from "./constants";
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -30,18 +32,27 @@ export class AuthService {
   }
 
   public getCookieWithJwtAccessToken(
-    userId: number,
+    user: any,
     isSecondFactorAuthenticated = false,
   ) {
-    const payload: TokenPayload = { userId, isSecondFactorAuthenticated };
+    const payload: TokenPayload = {
+      userName: user.username,
+      userId: user.id,
+      isSecondFactorAuthenticated,
+    };
+    const token = this.jwtService.sign(payload);
+    return `Authentication=${token}; HttpOnly; Path=/;`;
+  }
+
+  public getCookieWithJwtRefreshToken(user: any) {
+    const payload: { userId: number } = { userId: user.id };
     const token = this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
-      expiresIn: `${this.configService.get(
-        'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
-      )}s`,
+      secret: jwtConstants.refresh_secret,
     });
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
-      'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
-    )}`;
+    const cookie = `Refresh=${token}; HttpOnly; Path=/;`;
+    return {
+      cookie,
+      token,
+    };
   }
 }

@@ -3,16 +3,12 @@ import { TwoFactorAuthenticationService } from './twoFactorAuthentication.servic
 import { TwoFactorAuthenticationController } from './twoFactorAuthentication.controller';
 import { UsersModule } from '../users/users.module';
 import { ConfigService } from '@nestjs/config';
-import { UsersService } from '../users/users.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../users/entities/user.entity';
 import { AuthService } from '../auth/auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from '../auth/constants';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
     UsersModule,
     JwtModule.register({
       signOptions: {
@@ -22,12 +18,7 @@ import { jwtConstants } from '../auth/constants';
     }),
   ],
   controllers: [TwoFactorAuthenticationController],
-  providers: [
-    TwoFactorAuthenticationService,
-    ConfigService,
-    UsersService,
-    AuthService,
-  ],
+  providers: [TwoFactorAuthenticationService, ConfigService, AuthService],
   exports: [TwoFactorAuthenticationService],
 })
 export class TwoFactorAuthenticationModule {}

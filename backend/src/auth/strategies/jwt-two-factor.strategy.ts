@@ -10,7 +10,7 @@ export class JwtTwoFactorStrategy extends PassportStrategy(
   Strategy,
   'jwt-two-factor',
 ) {
-  constructor(private readonly userService: UsersService) {
+  constructor(private userService: UsersService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => {

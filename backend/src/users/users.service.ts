@@ -53,4 +53,11 @@ export class UsersService {
       isTwoFactorAuthenticationEnabled: true,
     });
   }
+
+  async setCurrentRefreshToken(refreshToken: string, userId: number) {
+    const token = await bcrypt.hash(refreshToken, 10);
+    await this.userRepository.update(userId, {
+      token,
+    });
+  }
 }
