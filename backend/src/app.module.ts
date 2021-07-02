@@ -10,6 +10,8 @@ import { TwoFactorAuthenticationService } from './2fa/twoFactorAuthentication.se
 import { TwoFactorAuthenticationModule } from './2fa/twoFactorAuthentication.module';
 import { ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './auth/constants';
 
 @Module({
   imports: [
@@ -17,6 +19,12 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     UsersModule,
     AuthModule,
     TwoFactorAuthenticationModule,
+    JwtModule.register({
+      signOptions: {
+        expiresIn: '60s',
+      },
+      secret: jwtConstants.secret,
+    }),
   ],
   controllers: [AppController],
   providers: [

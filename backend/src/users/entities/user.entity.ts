@@ -6,6 +6,9 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ default: false })
+  public isTwoFactorAuthenticationEnabled: boolean;
+
   @Column()
   login: string;
 

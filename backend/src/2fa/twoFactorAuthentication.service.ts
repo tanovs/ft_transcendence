@@ -19,13 +19,6 @@ export class TwoFactorAuthenticationService {
       this.configService.get('TWO_FACTOR_AUTHENTICATION_APP_NAME'),
       secret,
     );
-    console.log(
-      user.id +
-        '\n' +
-        user.login +
-        '\n' +
-        this.configService.get('TWO_FACTOR_AUTHENTICATION_APP_NAME'),
-    );
     await this.usersService.setTwoFactorAuthenticationSecret(secret, user.id);
     return {
       secret,
@@ -34,6 +27,16 @@ export class TwoFactorAuthenticationService {
   }
 
   public async respondWithQRCode(data: string, response: Response) {
-    toFileStream(response, data);
+    return toFileStream(response, data);
+  }
+
+  public isTwoFactorAuthenticationCodeValid(
+    twoFactorAuthenticationCode: string,
+    user: User,
+  ) {
+    return authenticator.verify({
+      token: twoFactorAuthenticationCode,
+      secret: user.twoFactorAuthenticationSecret,
+    });
   }
 }
