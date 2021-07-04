@@ -1,0 +1,30 @@
+#Pong {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.pong-div {
+	padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ui.menu.joinMenuStyle {
+  position: absolute;
+  font-family: "Turret Road";
+  left: 44.3%;
+  background-color: #FFFFFF;
+  border-radius: 0;
+  outline: none;
+}
+
+.ui.menu.loaderStyle {
+  position: absolute;
+  font-family: "Turret Road";
+  right: 51.3%;
+  background-color: #FFFFFF;
+  border-radius: 0;
+  outline: none;
+}
