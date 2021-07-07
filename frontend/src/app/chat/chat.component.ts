@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import io from 'socket.io-client';
+import * as io from 'socket.io-client';
 import {BACKEND_ADDRESS} from "../../environments/environment";
 @Component({
   selector: 'app-chat',

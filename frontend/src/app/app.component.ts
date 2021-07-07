@@ -1,5 +1,5 @@
+/// <reference path="../../typings/globals/socket.io-client/index.d.ts" />
 import {Component, OnInit} from '@angular/core';
-import {io, Socket} from "socket.io-client";
 
 @Component({
   selector: 'app-root',
