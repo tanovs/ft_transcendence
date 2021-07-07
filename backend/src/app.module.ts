@@ -7,7 +7,7 @@ import { ChatGateway } from './chat.gateway';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule, AuthModule, HttpModule],
+  imports: [TypeOrmModule.forRoot(), UsersModule, AuthModule],
   controllers: [AppController],
   providers: [AppService, ChatGateway],
 })

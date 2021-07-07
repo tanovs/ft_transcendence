@@ -10,10 +10,11 @@ import { RegisterComponent } from './register/register.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import {AuthInterceptor} from "./auth.interceptor";
+import { Login42Component } from './login42/login42.component';
 
 
 @NgModule({
-  declarations: [AppComponent, UsersComponent, ChatComponent, RegisterComponent, LoginComponent],
+  declarations: [AppComponent, UsersComponent, ChatComponent, RegisterComponent, LoginComponent, Login42Component],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgbModule],
   providers: [{
     provide: HTTP_INTERCEPTORS,

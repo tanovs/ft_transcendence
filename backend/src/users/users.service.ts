@@ -14,11 +14,6 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    // let result: CreateUserDto = createUserDto;
-    // const saltOrRounds = 10;
-    // const hash = await bcrypt.hash(createUserDto.password, saltOrRounds);
-    // result.login = createUserDto.login;
-    // result.password = hash;
     return this.userRepository.save(createUserDto);
   }
 
@@ -30,9 +25,9 @@ export class UsersService {
     return this.userRepository.findOne(id);
   }
 
-  async findByUserName(username: string): Promise<User> {
+  async findByLogin(login: string): Promise<User> {
     const qb = this.userRepository.createQueryBuilder('user');
-    return qb.where('user.username = :username', { username: username }).getOne();
+    return qb.where('user.login = :login', { login: login }).getOne();
   }
 
 

@@ -23,7 +23,7 @@ export class UsersController {
   @Get()
   findAll(@Query('username') username: string) {
     if (username)
-      return this.usersService.findByUserName(username);
+      return this.usersService.findByLogin(username);
     return this.usersService.findAll();
   }
 
