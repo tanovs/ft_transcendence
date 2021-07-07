@@ -20,10 +20,7 @@ export class TwoFactorAuthenticationService {
       secret,
     );
     await this.usersService.setTwoFactorAuthenticationSecret(secret, user.id);
-    return {
-      secret,
-      otpauthUrl,
-    };
+    return otpauthUrl;
   }
 
   public async respondWithQRCode(data: string, response: Response) {

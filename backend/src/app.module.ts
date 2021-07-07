@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, Module } from "@nestjs/common";
+import { ClassSerializerInterceptor, HttpModule, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,7 +8,7 @@ import { ChatGateway } from './chat.gateway';
 import { AuthService } from './auth/auth.service';
 import { TwoFactorAuthenticationService } from './2fa/twoFactorAuthentication.service';
 import { TwoFactorAuthenticationModule } from './2fa/twoFactorAuthentication.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import * as Joi from 'joi';
 
@@ -26,6 +26,7 @@ import * as Joi from 'joi';
         JWT_EXPIRATION_TIME: Joi.string().required(),
       }),
     }),
+    HttpModule,
   ],
   controllers: [AppController],
   providers: [
@@ -33,7 +34,6 @@ import * as Joi from 'joi';
     AuthService,
     ChatGateway,
     TwoFactorAuthenticationService,
-    ConfigService,
     //global interceptor for pass hiding instead of decorators repeat
     {
       provide: APP_INTERCEPTOR,

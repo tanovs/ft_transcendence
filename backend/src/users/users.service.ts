@@ -50,14 +50,20 @@ export class UsersService {
 
   async turnOnTwoFactorAuthentication(userId: number) {
     return this.userRepository.update(userId, {
-      isTwoFactorAuthenticationEnabled: true,
+      is2faEnabled: true,
     });
   }
 
-  async setCurrentRefreshToken(token: string, userId: number) {
+  async setAuthToken(authToken: string, id: number) {
+    await this.userRepository.update(id, {
+      authToken,
+    });
+  }
+
+  async setCurrentRefreshToken(authToken: string, userId: number) {
     //const token = await bcrypt.hash(refreshToken, 10);
     await this.userRepository.update(userId, {
-      token,
+      authToken,
     });
   }
 }

@@ -7,7 +7,7 @@ export class User {
   id: number;
 
   @Column({ default: false })
-  public isTwoFactorAuthenticationEnabled: boolean;
+  public is2faEnabled: boolean;
 
   @Column()
   login: string;
@@ -19,11 +19,11 @@ export class User {
   @Column()
   email: string;
 
-  @Exclude()
+  //@Exclude()
   @Column({ nullable: true })
-  token: string;
+  authToken: string;
 
-  @Exclude()
+  //@Exclude()
   @Column({ nullable: true })
   public twoFactorAuthenticationSecret?: string;
 

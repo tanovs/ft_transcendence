@@ -18,18 +18,15 @@ export class AuthService {
     const user = await this.usersService.findByName(username);
     if (user && bcrypt.compareSync(pass, user.password)) {
       const { password, ...result } = user;
-      console.log('Logged as ' + username);
       return result;
     }
     return null;
   }
 
-  // async login(user: any) {
-  //   const payload = { username: user.username, sub: user.id };
-  //   return {
-  //     access_token: this.jwtService.sign(payload),
-  //   };
-  // }
+  async login(user: any) {
+    const payload = { username: user.username, sub: user.id };
+    return this.jwtService.sign(payload);
+  }
 
   public getCookieWithJwtAccessToken(
     user: any,

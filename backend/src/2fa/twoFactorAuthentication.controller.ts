@@ -10,20 +10,21 @@ import {
   Body,
   HttpCode,
   HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+  HttpStatus, ExecutionContext
+} from "@nestjs/common";
 import { TwoFactorAuthenticationService } from './twoFactorAuthentication.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { UsersDecorator } from '../users/users.decorator';
 import { User } from '../users/entities/user.entity';
 import RequestWithUser from './requestWithUser.interface';
 import { UsersService } from '../users/users.service';
 import { TwoFactorAuthenticationCodeDto } from './dto/TwoFactorAuthenticationCodeDto.dto';
 import { AuthService } from '../auth/auth.service';
+import { UsersDecorator } from '../users/users.decorator';
+import { ExtractJwt } from "passport-jwt";
 
 // We have the following approach:
 //
-// 1) the user logs in using the email and the password, and we respond with a JWT token,
+// 1) the user logs in using the login and the password, and we respond with a JWT token,
 // 2) if the 2FA is turned off, we give full access to the user,
 // 3) if the 2FA is turned on, we provide the access just to the /2fa/authenticate endpoint,
 // 4) the user looks up the Authenticator application code and sends it to the /2fa/authenticate endpoint; we respond with a new JWT token with full access.
@@ -39,14 +40,9 @@ export class TwoFactorAuthenticationController {
 
   @Post('generate')
   @UseGuards(JwtAuthGuard)
-  async register(@Res() response, @Body() user: User) {
-    const { otpauthUrl } =
-      await this.twoFactorAuthenticationService.generateTwoFactorAuthenticationSecret(
-        user,
-      );
-    return this.twoFactorAuthenticationService.respondWithQRCode(
-      otpauthUrl,
-      response,
+  async register(@Body() user: User) {
+    return await this.twoFactorAuthenticationService.generateTwoFactorAuthenticationSecret(
+      user,
     );
   }
 
@@ -54,13 +50,15 @@ export class TwoFactorAuthenticationController {
   @HttpCode(200)
   @UseGuards(JwtAuthGuard)
   async turnOnTwoFactorAuthentication(
-    @Req() request: RequestWithUser,
+    @UsersDecorator() user: User,
     @Body() { twoFactorAuthenticationCode }: TwoFactorAuthenticationCodeDto,
   ) {
+    console.log('code: ' + twoFactorAuthenticationCode + '\n');
+    console.log('user: ' + user.login + '\n');
     const isCodeValid =
       this.twoFactorAuthenticationService.isTwoFactorAuthenticationCodeValid(
         twoFactorAuthenticationCode,
-        request.user,
+        user,
       );
     if (!isCodeValid) {
       throw new HttpException(
@@ -71,7 +69,7 @@ export class TwoFactorAuthenticationController {
         HttpStatus.UNAUTHORIZED,
       );
     }
-    await this.usersService.turnOnTwoFactorAuthentication(request.user.id);
+    await this.usersService.turnOnTwoFactorAuthentication(user.id);
   }
 
   @Post('authenticate')
