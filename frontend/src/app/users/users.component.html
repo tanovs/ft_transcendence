@@ -6,13 +6,15 @@
       <table class="table table-bordered border-primary" border="3">
         <tr>
           <th scope="col">id</th>
+          <th scope="col">email</th>
           <th scope="col">Логин</th>
-          <th scope="col">Хэш пароля</th>
+          <th scope="col">display_name</th>
         </tr>
         <tr *ngFor="let user of users$ | async">
           <td>{{user.id}}</td>
-          <td>{{user.username}}</td>
-          <td>{{user.password}}</td >
+          <td>{{user.email}}</td>
+          <td>{{user.login}}</td >
+          <td>{{user.display_name}}</td >
         </tr>
       </table>
     </div>

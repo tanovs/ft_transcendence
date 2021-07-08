@@ -32,8 +32,6 @@ export class AuthService {
         if (localStorage.getItem('access_token'))
           this.router.navigate(['/users'])
       });
-
-
   }
 
   logout() {

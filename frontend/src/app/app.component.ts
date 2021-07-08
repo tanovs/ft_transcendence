@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "./auth.service";
+import {Subscription} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -12,6 +14,7 @@ export class AppComponent implements OnInit{
 
   constructor(private authService: AuthService) {
   }
+
 
   ngOnInit(): void {
   }

@@ -40,6 +40,7 @@ export class UsersComponent implements OnInit {
 
 interface Person {
   id: number;
-  username: number;
-  password: string;
+  email: number;
+  login: string;
+  display_name: string
 }
