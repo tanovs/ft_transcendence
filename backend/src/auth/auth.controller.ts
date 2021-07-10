@@ -4,7 +4,7 @@ import {
   Get,
   HttpCode,
   HttpException,
-  HttpStatus,
+  HttpStatus, Param,
   Post,
   Query,
   Redirect, Req,
@@ -20,8 +20,14 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth/42')
 export class AuthController {
+  myCode = ''
   constructor(private authService: AuthService,
               private usersService: UsersService) {
+  }
+
+  @Get()
+  redirect(@Query('code') code: string, @Res() res: Response) {
+    return res.redirect(`http://localhost:8080/login?code=${code}`)
   }
 
   @UseGuards(JwtAuthGuard)

@@ -23,7 +23,7 @@
             <a class="nav-link" (click)="logout()">Выйти</a>
           </li>
           <li *ngIf="!isAuthorised()" class="nav-item">
-            <a class="nav-link" href="/login">Войти</a>
+            <a class="nav-link" (click)="login()">Войти</a>
           </li>
         </ul>
       </div>

@@ -4,6 +4,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BACKEND_ADDRESS} from "../../environments/environment";
 import {Router} from "@angular/router";
 import {AuthInterceptor} from "../auth.interceptor";
+import {AuthService} from "../auth.service";
+import {share} from "rxjs/operators";
 
 
 
@@ -12,29 +14,19 @@ import {AuthInterceptor} from "../auth.interceptor";
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent {
   title = 'Тут работаем с базой данных'
-
-  constructor(private http: HttpClient,
-              private router: Router) {
-  }
-
   users$: Observable<Person[]> = this.getUsers();
+  constructor(private http: HttpClient) {
+  }
 
   getUsers(): Observable<Person[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization':  'Bearer ' + localStorage.getItem('access_token')
-      })
-    };
-    return this.http.get<Person[]>(BACKEND_ADDRESS + '/users', httpOptions).pipe();
-  }
 
-  ngOnInit(): void {
-    if (!localStorage.getItem('access_token'))
-    {
-      this.router.navigate(['/login'])
-    }
+   return this.http.get<Person[]>('http://localhost:3000/users', {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      }
+    }).pipe(share())
   }
 }
 
@@ -42,5 +34,5 @@ interface Person {
   id: number;
   email: number;
   login: string;
-  display_name: string
+  displayname: string
 }
