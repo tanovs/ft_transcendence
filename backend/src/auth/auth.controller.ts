@@ -20,7 +20,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth/42')
 export class AuthController {
-  myCode = ''
+
   constructor(private authService: AuthService,
               private usersService: UsersService) {
   }

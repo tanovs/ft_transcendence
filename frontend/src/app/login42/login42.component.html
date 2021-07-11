@@ -1,1 +1,8 @@
-<p>login42 works!</p>
+<div class="container">
+  <div *ngIf="cc">
+    Перенаправляю
+  </div>
+  <div *ngIf="!cc">
+    Требуется авторизация
+  </div>
+</div>
