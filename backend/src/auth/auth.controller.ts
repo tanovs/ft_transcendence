@@ -31,29 +31,42 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get("/me")
+  @Get('/me')
   async me(@Req() request, @Res() response: Response) {
     const user = await this.usersService.findOne(request.user.sub)
     return response.status(200).json(user)
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('/user')
+  async get_user(@Body() body: LoginDto, @Res() res: Response) {
+    const code = body.code;
+    const fortyTwoUser = await this.authService.get42User(code);
+    const user = await this.authService.findUserFromLogin(fortyTwoUser.login);
+    console.log(user);
+    return res.status(200).json(user);
+  }
+
   @Post('token')
   async callback(@Body() body: LoginDto, @Res() res: Response) {
-    const code = body.code
-    let user = null
-    const fortyTwoUser = await this.authService.get42User(code)
+    const code = body.code;
+    let user = null;
+    const fortyTwoUser = await this.authService.get42User(code);
     if (!fortyTwoUser) {
-      throw new HttpException({
-        error: `42 user can't be found`
-      }, HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        {
+          error: `42 user can't be found`,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
     }
     user = await this.authService.findUserFromLogin(fortyTwoUser.login)
     if (user === null) {
       let dto = new CreateUserDto()
         .set_displayname(fortyTwoUser.displayname)
         .set_login(fortyTwoUser.login)
-        .set_email(fortyTwoUser.email)
-      user = await this.usersService.create(dto)
+        .set_email(fortyTwoUser.email);
+      user = await this.usersService.create(dto);
     }
     const payload = {
       username: user.display_name,
