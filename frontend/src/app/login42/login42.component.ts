@@ -39,6 +39,7 @@ export class Login42Component implements OnInit {
 
 
   saveToken(token: any) {
+
     localStorage.setItem('access_token', token.access_token)
     this.cc = localStorage.getItem('access_token')
     window.location.href = 'http://localhost:8080/users'

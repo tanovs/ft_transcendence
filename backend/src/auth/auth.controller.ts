@@ -26,9 +26,9 @@ export class AuthController {
   }
 
   @Get()
-  redirect(@Query('code') code: string) {
-    return code;
-    // res.redirect(`http://localhost:8080/login?code=${code}`)
+  redirect(@Query('code') code: string, @Res() res) {
+    // return code;
+    res.redirect(`http://localhost:8080/login?code=${code}`)
   }
 
   @UseGuards(JwtAuthGuard)

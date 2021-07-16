@@ -24,13 +24,14 @@ import { TwoFACodeDto } from './dto/TwoFACodeDto.dto';
 // 4) the user looks up the Authenticator application code and sends it to the /2fa/authenticate endpoint; we respond with a new JWT token with full access.
 
 @Controller('2fa')
-//@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 export class TwoFAController {
   constructor(
     private readonly twoFAService: TwoFAService,
     private readonly usersService: UsersService,
   ) {}
+
 
   @Post('generate')
   async register(@Req() request, @Res() response) {

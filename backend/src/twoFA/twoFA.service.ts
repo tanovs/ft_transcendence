@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Res } from '@nestjs/common';
 import { authenticator } from 'otplib';
 import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
@@ -23,7 +23,7 @@ export class TwoFAService {
     return otpauthUrl;
   }
 
-  public async respondWithQRCode(data: string, response: Response) {
+  public async respondWithQRCode(data: string, @Res() response) {
     return toFileStream(response, data);
   }
 
