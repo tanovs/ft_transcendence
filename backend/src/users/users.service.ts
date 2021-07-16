@@ -21,15 +21,14 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  findOne(id: number): Promise<User> {
-    return this.userRepository.findOne(id);
+  async findOne(id: number): Promise<User> {
+    return await this.userRepository.findOne(id);
   }
 
   async findByLogin(login: string): Promise<User> {
     const qb = this.userRepository.createQueryBuilder('user');
     return qb.where('user.login = :login', { login: login }).getOne();
   }
-
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return this.userRepository.update(id, updateUserDto);
@@ -39,4 +38,15 @@ export class UsersService {
     return this.userRepository.delete(id);
   }
 
+  async setTwoFASecret(secret: string, userId: number) {
+    return this.userRepository.update(userId, {
+      twoFASecret: secret,
+    });
+  }
+
+  async turnOnTwoFA(userId: number) {
+    return this.userRepository.update(userId, {
+      isTwoFAEnabled: true,
+    });
+  }
 }

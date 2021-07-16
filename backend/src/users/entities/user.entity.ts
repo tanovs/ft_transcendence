@@ -10,10 +10,20 @@ export class User {
 
   @Column({
     default: null,
-    unique: true
+    unique: true,
   })
-  login: string
+  login: string;
 
   @Column()
   displayname: string;
+
+  @Column({
+    default: null,
+  })
+  twoFASecret: string;
+
+  @Column({
+    default: false,
+  })
+  isTwoFAEnabled: boolean;
 }
