@@ -26,25 +26,23 @@ export class AuthController {
   }
 
   @Get()
-  redirect(@Query('code') code: string, @Res() res: Response) {
-    return res.redirect(`http://localhost:8080/login?code=${code}`)
+  redirect(@Query('code') code: string) {
+    return code;
+    // res.redirect(`http://localhost:8080/login?code=${code}`)
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/me')
   async me(@Req() request, @Res() response: Response) {
     const user = await this.usersService.findOne(request.user.sub)
+    console.log(request)
     return response.status(200).json(user)
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/user')
-  async get_user(@Body() body: LoginDto, @Res() res: Response) {
-    const code = body.code;
-    const fortyTwoUser = await this.authService.get42User(code);
-    const user = await this.authService.findUserFromLogin(fortyTwoUser.login);
-    console.log(user);
-    return res.status(200).json(user);
+  async get_user(@Req() request) {
+    return request.user;
   }
 
   @Post('token')

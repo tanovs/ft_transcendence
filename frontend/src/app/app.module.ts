@@ -8,11 +8,10 @@ import { UsersComponent } from './users/users.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {AuthInterceptor} from "./auth.interceptor";
 import { Login42Component } from './login42/login42.component';
-import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
-  declarations: [AppComponent, UsersComponent, Login42Component, ChatComponent],
+  declarations: [AppComponent, UsersComponent, Login42Component],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgbModule],
   providers: [{
     provide: HTTP_INTERCEPTORS,

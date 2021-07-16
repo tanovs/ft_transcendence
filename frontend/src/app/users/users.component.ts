@@ -34,5 +34,5 @@ interface Person {
   id: number;
   email: number;
   login: string;
-  displayname: string
+  displayname: string;
 }
