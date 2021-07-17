@@ -23,7 +23,7 @@ export class User {
   twoFASecret: string;
 
   @Column({
-    default: false,
+    default: true,
   })
   isTwoFAEnabled: boolean;
 }
