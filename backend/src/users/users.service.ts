@@ -49,4 +49,10 @@ export class UsersService {
       isTwoFAEnabled: true,
     });
   }
+
+  async turnOffTwoFA(userId: number) {
+    return this.userRepository.update(userId, {
+      isTwoFAEnabled: false,
+    });
+  }
 }
